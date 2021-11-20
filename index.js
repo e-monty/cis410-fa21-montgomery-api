@@ -61,6 +61,25 @@ app.post("/rating", auth, async (req, res) => {
   }
 });
 
+app.get("/rating/me", auth, async (req, res) => {
+  db.executeQuery(
+    `SELECT Rating.RatingPK, Rating.PassFail, Rating.Review, Rating.ArtFK, Art.Title
+    FROM Rating
+    JOIN Art
+    ON Rating.ArtFK = Art.ArtPK
+    LEFT JOIN Contact
+    ON Contact.ContactPK = Rating.ContactFK
+    WHERE ContactPK = ${req.contact.ContactPK}`
+  )
+    .then((theResults) => {
+      res.status(200).send(theResults);
+    })
+    .catch((myError) => {
+      console.log(myError);
+      res.status(500).send();
+    });
+});
+
 app.get("/contacts/me", auth, (req, res) => {
   res.send(req.contact);
 });
@@ -89,7 +108,7 @@ app.post("/contacts/login", async (req, res) => {
     return res.status(401).send("Invalid user credentials");
   }
 
-  //3. CHECK PASSWORD   ----->> !!!Always returns invalid!!! <<-----
+  //3. CHECK PASSWORD
 
   let user = result[0];
 
@@ -163,6 +182,21 @@ app.post("/contacts", async (req, res) => {
     })
     .catch((err) => {
       console.log("error in POST /contact", err);
+      res.status(500).send();
+    });
+});
+
+app.post("/contacts/logout", auth, (req, res) => {
+  let query = `UPDATE Contact
+  SET token = NULL
+  WHERE ContactPK = ${req.contact.ContactPK}`;
+
+  db.executeQuery(query)
+    .then(() => {
+      res.status(200).send();
+    })
+    .catch((err) => {
+      console.log("error in POST /contacts/logout", err);
       res.status(500).send();
     });
 });
