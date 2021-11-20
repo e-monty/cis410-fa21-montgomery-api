@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/3a60148d-0ac0-4bb4-babc-e013807f1a4f/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cis410-fa21-montgomery-api",
+  "appService.deploySubpath": "."
+}

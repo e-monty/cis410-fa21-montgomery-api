@@ -1,12 +1,12 @@
 const sql = require("mssql");
 
-const rockwellConfig = require("./config.js");
+const montgomeryConfig = require("./config.js");
 
 const config = {
-  user: rockwellConfig.DB.user,
-  password: rockwellConfig.DB.password,
-  server: rockwellConfig.DB.server,
-  database: rockwellConfig.DB.database,
+  user: montgomeryConfig.DB.user,
+  password: montgomeryConfig.DB.password,
+  server: montgomeryConfig.DB.server,
+  database: montgomeryConfig.DB.database,
 };
 
 async function executeQuery(aQuery) {
