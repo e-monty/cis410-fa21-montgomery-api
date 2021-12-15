@@ -178,7 +178,7 @@ app.post("/contacts", async (req, res) => {
 
   db.executeQuery(insertQuery)
     .then(() => {
-      res.status(201).sendStatus();
+      res.status(201).send();
     })
     .catch((err) => {
       console.log("error in POST /contact", err);
